@@ -15,3 +15,14 @@ export async function POST(
 
   res.json({ brand: result })
 }
+
+export async function GET(req: MedusaRequest, res: MedusaResponse) {
+  const query = req.scope.resolve("query")
+
+  const { data: brands } = await query.graph({
+    entity: "brand",
+    fields: ["*", "products.*"],
+  })
+
+  res.json({ brands })
+}
